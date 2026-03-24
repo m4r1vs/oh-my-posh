@@ -5,6 +5,7 @@ import (
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
 	"github.com/jandedobbeleer/oh-my-posh/src/maps"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 
 	"github.com/stretchr/testify/assert"
@@ -159,6 +160,7 @@ func TestRenderTemplate(t *testing.T) {
 	for _, tc := range cases {
 		env := new(mock.Environment)
 		env.On("Shell").Return("foo")
+		env.On("Flags").Return(&runtime.Flags{})
 		Cache = new(cache.Template)
 		Init(env, nil, nil)
 
@@ -238,6 +240,7 @@ func TestRenderTemplateEnvVar(t *testing.T) {
 	for _, tc := range cases {
 		env := &mock.Environment{}
 		env.On("Shell").Return("foo")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		for k, v := range tc.Env {
 			env.On("Getenv", k).Return(v)
@@ -258,6 +261,21 @@ func TestRenderTemplateEnvVar(t *testing.T) {
 
 		assert.Equal(t, tc.Expected, text, tc.Case)
 	}
+}
+
+func TestRenderKeymap(t *testing.T) {
+	env := &mock.Environment{}
+	env.On("Flags").Return(&runtime.Flags{
+		Keymap: "vicmd",
+	})
+	env.On("Shell").Return("foo")
+	Cache = &cache.Template{}
+	Init(env, nil, nil)
+
+	template := "{{ .Keymap }}"
+	text, err := Render(template, nil)
+	assert.NoError(t, err)
+	assert.Equal(t, "vicmd", text)
 }
 
 func TestPatchTemplate(t *testing.T) {
@@ -335,6 +353,7 @@ func TestPatchTemplate(t *testing.T) {
 
 	env := new(mock.Environment)
 	env.On("Shell").Return("foo")
+	env.On("Flags").Return(&runtime.Flags{})
 	Cache = new(cache.Template)
 	Init(env, nil, nil)
 
@@ -367,6 +386,7 @@ func (f *Foo) Hello() string {
 func TestPatchTemplateStruct(t *testing.T) {
 	env := new(mock.Environment)
 	env.On("Shell").Return("foo")
+	env.On("Flags").Return(&runtime.Flags{})
 	Cache = new(cache.Template)
 	Init(env, nil, nil)
 
@@ -393,6 +413,7 @@ func TestSegmentContains(t *testing.T) {
 	segments := maps.NewConcurrent[any]()
 	segments.Set("Git", "foo")
 	env.On("Shell").Return("foo")
+	env.On("Flags").Return(&runtime.Flags{})
 
 	Cache = &cache.Template{
 		Segments: segments,

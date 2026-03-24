@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 	"github.com/jandedobbeleer/oh-my-posh/src/segments/options"
 	"github.com/jandedobbeleer/oh-my-posh/src/template"
@@ -30,6 +31,7 @@ func TestBun(t *testing.T) {
 		env.On("Pwd").Return("/usr/home/project")
 		env.On("Home").Return("/usr/home")
 		env.On("Shell").Return("foo")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		if template.Cache == nil {
 			template.Cache = &cache.Template{}

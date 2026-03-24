@@ -295,6 +295,7 @@ func TestPythonUVTooling(t *testing.T) {
 		env.On("GOOS").Return("")
 		env.On("PathSeparator").Return("/")
 		env.On("Shell").Return("bash")
+		env.On("Flags").Return(&runtime.Flags{})
 		env.On("CommandPath", testify_.Anything).Return("")
 		env.On("HasFilesInDir", testify_.Anything, "pyvenv.cfg").Return(false)
 		env.On("Getenv", "VIRTUAL_ENV").Return("")

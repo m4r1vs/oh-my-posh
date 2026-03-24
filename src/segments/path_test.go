@@ -22,6 +22,7 @@ const (
 
 func renderTemplateNoTrimSpace(env *mock.Environment, segmentTemplate string, context any) string {
 	env.On("Shell").Return("foo")
+	env.On("Flags").Return(&runtime.Flags{})
 
 	if template.Cache == nil {
 		template.Cache = &cache.Template{}
@@ -352,6 +353,7 @@ func TestGetFolderSeparator(t *testing.T) {
 	for _, tc := range cases {
 		env := new(mock.Environment)
 		env.On("Shell").Return(shell.GENERIC)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = &cache.Template{
 			SimpleTemplate: cache.SimpleTemplate{
@@ -476,6 +478,7 @@ func TestGetMaxWidth(t *testing.T) {
 		env := new(mock.Environment)
 		env.On("Getenv", "MAX_WIDTH").Return("120")
 		env.On("Shell").Return(shell.BASH)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = new(cache.Template)
 		template.Init(env, nil, nil)
@@ -639,6 +642,7 @@ func TestAgnosterMaxWidth(t *testing.T) {
 			env.On("Home").Return("/home")
 			env.On("GOOS").Return(tc.goos)
 			env.On("Shell").Return(shell.BASH)
+			env.On("Flags").Return(&runtime.Flags{})
 
 			path := &Path{
 				Base: Base{
@@ -832,6 +836,7 @@ func TestFishPath(t *testing.T) {
 			env.On("Home").Return("/foob")
 			env.On("GOOS").Return(tc.goos)
 			env.On("Shell").Return(shell.BASH)
+			env.On("Flags").Return(&runtime.Flags{})
 
 			path := &Path{
 				Base: Base{

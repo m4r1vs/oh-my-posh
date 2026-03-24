@@ -231,6 +231,7 @@ func TestFormatBranch(t *testing.T) {
 
 		env := new(mock.Environment)
 		env.On("Shell").Return(shell.BASH)
+		env.On("Flags").Return(&runtime.Flags{})
 		template.Cache = new(cache.Template)
 		template.Init(env, nil, nil)
 

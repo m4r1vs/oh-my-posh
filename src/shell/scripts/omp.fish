@@ -147,8 +147,9 @@ function _omp_get_prompt
         --no-status=$_omp_no_status \
         --execution-time=$_omp_execution_time \
         --stack-count=$_omp_stack_count \
+        --keymap="$fish_bind_mode" \
         $argv[2..]
-end
+        }
 
 # NOTE: Input function calls via `commandline --function` are put into a queue and will not be executed until an outer regular function returns. See https://fishshell.com/docs/current/cmds/commandline.html.
 

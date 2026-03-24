@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 	"github.com/jandedobbeleer/oh-my-posh/src/segments/options"
 	"github.com/jandedobbeleer/oh-my-posh/src/shell"
@@ -28,6 +29,7 @@ func TestStatusWriterEnabled(t *testing.T) {
 		env := new(mock.Environment)
 		env.On("StatusCodes").Return(tc.Status, "")
 		env.On("Shell").Return(shell.GENERIC)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		props := options.Map{}
 		if len(tc.Template) > 0 {
@@ -102,6 +104,7 @@ func TestFormatStatus(t *testing.T) {
 
 		env := new(mock.Environment)
 		env.On("Shell").Return(shell.GENERIC)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		s := &Status{}
 		s.Init(props, env)

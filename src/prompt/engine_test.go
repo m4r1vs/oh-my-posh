@@ -94,6 +94,7 @@ func TestPrintPWD(t *testing.T) {
 		env.On("IsCygwin").Return(tc.Cygwin)
 		env.On("IsWsl").Return(false)
 		env.On("Host").Return("host", nil)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = &cache.Template{
 			SimpleTemplate: cache.SimpleTemplate{
@@ -170,6 +171,7 @@ func TestPrintPWDWSL(t *testing.T) {
 		env.On("IsCygwin").Return(false)
 		env.On("IsWsl").Return(tc.IsWsl)
 		env.On("Host").Return("host", nil)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		if tc.IsWsl {
 			if tc.WinPath == "" {
@@ -273,6 +275,7 @@ func TestGetTitle(t *testing.T) {
 		env.On("PathSeparator").Return(tc.PathSeparator)
 		env.On("Getenv", "USERDOMAIN").Return("MyCompany")
 		env.On("Shell").Return(tc.ShellName)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		terminal.Init(shell.GENERIC)
 
@@ -339,6 +342,7 @@ func TestGetConsoleTitleIfGethostnameReturnsError(t *testing.T) {
 		env.On("Home").Return("/usr/home")
 		env.On("Getenv", "USERDOMAIN").Return("MyCompany")
 		env.On("Shell").Return(tc.ShellName)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		terminal.Init(shell.GENERIC)
 
@@ -453,6 +457,7 @@ func TestShouldFill(t *testing.T) {
 	for _, tc := range cases {
 		env := new(mock.Environment)
 		env.On("Shell").Return(shell.GENERIC)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		engine := &Engine{
 			Env:      env,

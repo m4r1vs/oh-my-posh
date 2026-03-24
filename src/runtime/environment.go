@@ -97,6 +97,7 @@ type Flags struct {
 	Plain         bool
 	Force         bool
 	Streaming     bool
+	Keymap        string
 }
 
 type CommandError struct {

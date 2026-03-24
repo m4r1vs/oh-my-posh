@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 	"github.com/jandedobbeleer/oh-my-posh/src/template"
 
@@ -94,6 +95,7 @@ func TestUI5Tooling(t *testing.T) {
 
 		// this is needed to build the version URL as before renderTemplate, the template is not initialized
 		env.On("Shell").Return("foo")
+		env.On("Flags").Return(&runtime.Flags{})
 		template.Cache = &cache.Template{}
 		template.Init(env, nil, nil)
 

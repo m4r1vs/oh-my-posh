@@ -16,12 +16,14 @@ type Data any
 type context struct {
 	Data
 	Getenv func(string) string
+	Keymap string
 	cache.Template
 }
 
 func (c *context) init(t *Text) {
 	c.Data = t.context
 	c.Getenv = env.Getenv
+	c.Keymap = env.Flags().Keymap
 	c.Template = *Cache
 }
 

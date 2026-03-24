@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 
 	"github.com/stretchr/testify/assert"
@@ -23,6 +24,7 @@ func TestGlob(t *testing.T) {
 
 	env := &mock.Environment{}
 	env.On("Shell").Return("foo")
+	env.On("Flags").Return(&runtime.Flags{})
 
 	Cache = new(cache.Template)
 	Init(env, nil, nil)

@@ -229,6 +229,7 @@ function _omp_get_prompt() {
     --job-count=$_omp_job_count \
     --stack-count=$_omp_stack_count \
     --terminal-width="${COLUMNS-0}" \
+    --keymap="${KEYMAP:-main}" \
     ${args[@]}
 }
 
@@ -293,6 +294,11 @@ function _omp_zle-line-init() {
   return $ret
 }
 
+function _omp_zle-keymap-select() {
+  _omp_status=$?
+  eval "$(_omp_get_prompt primary --eval)"
+}
+
 # Helper function for calling a widget before the specified OMP function.
 function _omp_call_widget() {
   # The name of the OMP function.
@@ -339,6 +345,8 @@ function enable_poshtooltips() {
 
   _omp_create_widget $widget _omp_render_tooltip
 }
+
+_omp_create_widget zle-keymap-select _omp_zle-keymap-select
 
 # legacy functions
 function enable_poshtransientprompt() {}

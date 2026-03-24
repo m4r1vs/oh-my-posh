@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/template"
 	"github.com/stretchr/testify/assert"
 )
@@ -70,6 +71,7 @@ func TestLua(t *testing.T) {
 		env.On("HasCommand", "luajit").Return(tc.HasLuaJit)
 		env.On("RunCommand", "luajit", []string{"-v"}).Return(tc.Version, nil)
 		env.On("Shell").Return("bash")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		// Initialize template system for version URL rendering
 		if template.Cache == nil {

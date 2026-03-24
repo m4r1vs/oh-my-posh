@@ -41,6 +41,7 @@ func TestGetAnsiFromColorString(t *testing.T) {
 
 func TestMakeColors(t *testing.T) {
 	env := &mock.Environment{}
+	env.On("Flags").Return(&runtime.Flags{})
 
 	cache.Set(cache.Device, accentColor, &Set{}, cache.INFINITE)
 	defer cache.DeleteAll(cache.Device)
@@ -77,6 +78,7 @@ func TestAnsiRender(t *testing.T) {
 		env := new(mock.Environment)
 		env.On("Getenv", "TERM_PROGRAM").Return(tc.Term)
 		env.On("Shell").Return("foo")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = new(cache.Template)
 		template.Init(env, nil, nil)

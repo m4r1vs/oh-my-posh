@@ -6,6 +6,7 @@ import (
 	"github.com/jandedobbeleer/oh-my-posh/src/cache"
 	"github.com/jandedobbeleer/oh-my-posh/src/cli/upgrade"
 	"github.com/jandedobbeleer/oh-my-posh/src/color"
+	"github.com/jandedobbeleer/oh-my-posh/src/runtime"
 	"github.com/jandedobbeleer/oh-my-posh/src/runtime/mock"
 	"github.com/jandedobbeleer/oh-my-posh/src/shell"
 	"github.com/jandedobbeleer/oh-my-posh/src/template"
@@ -94,6 +95,7 @@ func TestGetPalette(t *testing.T) {
 	for _, tc := range cases {
 		env := &mock.Environment{}
 		env.On("Shell").Return("bash")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = &cache.Template{
 			SimpleTemplate: cache.SimpleTemplate{

@@ -712,7 +712,11 @@ func TestFolderPathCustomMappedLocations(t *testing.T) {
 	env.On("Flags").Return(args)
 	env.On("Shell").Return(shell.GENERIC)
 
-	template.Cache = new(cache.Template)
+	template.Cache = &cache.Template{
+		SimpleTemplate: cache.SimpleTemplate{
+			Shell: "bash",
+		},
+	}
 	template.Init(env, nil, nil)
 
 	props := options.Map{
@@ -757,6 +761,7 @@ func TestReplaceMappedLocations(t *testing.T) {
 		env.On("Shell").Return(shell.FISH)
 		env.On("GOOS").Return(runtime.DARWIN)
 		env.On("Home").Return("/a/b/k")
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = new(cache.Template)
 		template.Init(env, nil, nil)
@@ -817,6 +822,7 @@ func TestGetPwd(t *testing.T) {
 		}
 		env.On("Flags").Return(args)
 		env.On("Shell").Return(shell.PWSH)
+		env.On("Flags").Return(&runtime.Flags{})
 
 		template.Cache = new(cache.Template)
 		template.Init(env, nil, nil)
